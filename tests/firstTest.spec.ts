@@ -7,18 +7,39 @@ test.beforeEach(async ({ page }) => {
 test.describe("first test suite", () => {
   test.beforeEach(async ({ page }) => {
     await page.getByRole('link', { name: 'Forms' }).click();
-  });
-
-  test("Navigate to Forms", async ({ page }) => {
     await page.getByRole('link', { name: 'Form Layouts' }).click();
   });
 
-  test("Navigate to DatePicker", async ({ page }) => {
-    await page.getByRole('link', { name: 'Datepicker' }).click();
+  test("Locator syntax Rules", async ({ page }) => {
+    //By Tag name 
+    page.locator('input').first().click();
+
+    // by ID
+    await page.locator('#inputEmail1');
+
+    // by class name
+    page.locator('.input-full-width');
+
+    // by attribute
+    page.locator('[placeholder="Email"]');
+
+    // by Class value (full)
+    page.locator('[class="input-full-width size-medium status-basic shape-rectangle nb-transition"]')
+
+    // combine different selectors
+    page.locator('input[placeholder="Email"]#inputEmail1.input-full-width');
+
+    // by XPath (NOT Recommended)
+    page.locator('//*[@id="inputEmail1"]');
+
+    // by partial text match 
+    page.locator('button:has-text("Submit")');
+    page.locator(':text-is("Using the Grid")');
   });
+
 });
 
-test.describe("second test suite", () => {
+test.describe.skip("second test suite", () => {
   test.beforeEach(async ({ page }) => {
     await page.getByRole('link', { name: 'Charts', exact: true }).click();
   });
