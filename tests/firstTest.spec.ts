@@ -55,6 +55,15 @@ test.describe("first test suite", () => {
      await page.locator('nb-card').getByRole('button',{name:'Sign in'}).click(); 
   });
 
+  test('Locating Parent Elements',async ({page})=>{
+
+    // Parents are unique & can be used to locate their child elements
+    // await page.locator('nb-card',{hasText:'Using the Grid'}).getByRole('textbox',{name:'Email'}).click();  
+    await page.locator('nb-card',{has:page.locator('#inputEmail1')}).getByRole('textbox',{name:'Email'}).click();
+    await page.locator('nb-card').filter({hasText:"Basic form"}).getByRole('textbox',{name:'Email'}).click();
+
+  });
+
   
 
 
