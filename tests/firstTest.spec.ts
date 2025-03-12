@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("localhost:4200");
@@ -52,7 +52,7 @@ test.describe("first test suite", () => {
   test('Locating Child elements',async ({page})=>{  
      await page.locator('nb-card nb-radio :text-is("Option 2")').click();
       //await page.locator('nb-card').getByRole('button',{name:'Sign in'}).click();
-     await page.locator('nb-card').getByRole('button',{name:'Sign in'}).click(); 
+     // await page.locator('nb-card').getByRole('button',{name:'Sign in'}).click(); 
   });
 
   test('Locating Parent Elements',async ({page})=>{
@@ -72,7 +72,9 @@ test.describe("first test suite", () => {
     await basicForm.locator('nb-checkbox').click();
     await basicForm.getByRole('button').click();
 
-
+    // Assertion
+    const emailField = basicForm.getByRole('textbox',{name:'Email'});
+    await expect(emailField).toHaveValue('test@test.com');
   });
 
 
