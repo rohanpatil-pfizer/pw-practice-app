@@ -16,6 +16,6 @@ test('Auto Waiting', async ({page}) => {
   // expect(text1).toContain('Data loaded with AJAX get request.');
 
   // expect has a timeout of 5 seconds, hence if we comment the above 3 lines then this below assertion will fail
-  await expect(successtext).toHaveText('Data loaded with AJAX get request.'); 
+  await expect(successtext).toHaveText('Data loaded with AJAX get request.',{timeout:20000}); 
 
 });
