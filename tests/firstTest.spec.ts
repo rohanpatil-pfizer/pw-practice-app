@@ -99,6 +99,29 @@ test.describe("first test suite", () => {
 
   });
 
+
+  test('Assertions',async({page})=>{
+    // General Assertions 
+    const value = 5;
+    expect(value).toBe(5);
+
+    const basicFormButton = page.locator('nb-card').filter({hasText:"Basic form"}).locator('button');
+    const text = await basicFormButton.textContent();
+    expect(text).toEqual('Submit');
+
+
+    // Locator Assertion
+    await expect(basicFormButton).toHaveText('Submit');
+
+    // Soft Assertion : test can continue even if the assertion fails 
+    // not a recommended approach but can be used if a certain test is failed & you want to continue other tests
+    
+    await expect.soft(basicFormButton).toHaveText('Submit5');
+    await basicFormButton.click();
+  });
+
+
+
 });
 
 test.describe.skip("second test suite", () => {
