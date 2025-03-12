@@ -25,7 +25,13 @@ test('Alternative Waits', async ({page}) => {
   const successBtn = page.locator('.bg-success');
 
   //  wait for element 
-   await page.waitForSelector('.bg-success');
+  // await page.waitForSelector('.bg-success');
+
+  // wait for particular response
+  // await page.waitForResponse('http://uitestingplayground.com/ajaxdata');
+
+  // wait for network calls to be completed ('NOT RECOMMENDED')
+  await page.waitForLoadState('networkidle'); // wait untill all network calls are completed, if some API calls are stuck then will move to next line
 
   const text = await successBtn.allTextContents(); 
   expect(text).toContain('Data loaded with AJAX get request.');
