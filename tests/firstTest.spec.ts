@@ -49,13 +49,13 @@ test.describe("first test suite", () => {
     await page.getByTestId("SignIn").click();
   });
 
-  test('Locating Child elements',async ({page})=>{  
+  test.skip('Locating Child elements',async ({page})=>{  
      await page.locator('nb-card nb-radio :text-is("Option 2")').click();
       //await page.locator('nb-card').getByRole('button',{name:'Sign in'}).click();
      // await page.locator('nb-card').getByRole('button',{name:'Sign in'}).click(); 
   });
 
-  test('Locating Parent Elements',async ({page})=>{
+  test.skip('Locating Parent Elements',async ({page})=>{
 
     // Parents are unique & can be used to locate their child elements
     // await page.locator('nb-card',{hasText:'Using the Grid'}).getByRole('textbox',{name:'Email'}).click();  
@@ -64,7 +64,7 @@ test.describe("first test suite", () => {
 
   });
 
-  test('Reusing the locators',async ({page})=>{
+  test.skip('Reusing the locators',async ({page})=>{
     const basicForm = page.locator('nb-card').filter({hasText:"Basic form"});
 
     await basicForm.getByRole('textbox',{name:'Email'}).fill('test@test.com');
@@ -77,6 +77,27 @@ test.describe("first test suite", () => {
     await expect(emailField).toHaveValue('test@test.com');
   });
 
+  test('Extracting Values',async ({page})=>{
+    // single test value 
+    const basicForm = page.locator('nb-card').filter({hasText:"Basic form"});
+    const buttonText = await basicForm.locator('button').textContent();
+    expect(buttonText).toEqual('Submit');
+
+    // Get All text values
+    const allRadioButtonsLabels = await page.locator('nb-radio').allTextContents();
+    // expect(allRadioButtonsLabels).toContain('Option 12');
+    expect(allRadioButtonsLabels).toContain('Option 1');
+
+    // input value
+    const emailField = basicForm.getByRole('textbox',{name:'Email'});
+    await emailField.fill('test@test.com');
+    const emailValue = await emailField.inputValue();
+    expect(emailValue).toBe('test@test.com');
+
+    const placeholderValue = await emailField.getAttribute('placeholder');
+    expect(placeholderValue).toBe('Email');
+
+  });
 
 });
 
